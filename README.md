@@ -1,1 +1,1 @@
-My personal config.
+Hi! This is my config.
