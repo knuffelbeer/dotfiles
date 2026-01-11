@@ -16,14 +16,16 @@ ls.add_snippets("tex", {
 	s("f", fmt("\\frac{{{}}}{{{}}}{}", { i(1), i(2), i(3) })),
 	s("e", fmt("e^{{{}}}", { i(1) })),
 	s("k", fmt("^{{{}}}{}", { i(1), i(2) })),
-	s("d", fmt("\\frac{{\\partial {}}}{{\\partial {}}}", { i(1),i(2) })),
+	s("d", fmt("\\frac{{d {}}}{{d {}}}", { i(1),i(2) })),
+	s("p", fmt("\\frac{{\\partial {}}}{{\\partial {}}}", { i(1),i(2) })),
 	s("v", fmt("\\vec{{{}}}", { i(1)})),
+	s("V", fmt("\\begin{{pmatrix}} \n {} \\\\ {} \\\\ {}  \n \\end{{pmatrix}}", { i(1), i(2),i(3)})),
 	s("gr", fmt("{}", { t("\\vec{{\\nabla}}")})),
 	s("d2", fmt("\\frac{{\\partial^{{2}}}}{{\\partial {}^{{2}}}}{}", { i(1), i(2) })),
 	s("dx", fmt("\\frac{{\\partial}}{{\\partial {}}}{}", { t("x"), i(1) })),
 	s("dy", fmt("\\frac{{\\partial}}{{\\partial {}}}{}", { t("y"), i(1) })),
 	s("K", fmt("_{{{}}}{}", { i(1), i(2) })),
-	s("p", fmt("{}", { t("\\pi") })),
+	-- s("p", fmt("{}", { t("\\pi") })),
 	s("P", fmt("{}", { t("\\phi") })),
 	s("l", fmt("{}", { t("\\lambda") })),
 	s("ha", fmt("\\mathcal{{{}}}{}", { i(1), i(2) })),
@@ -32,7 +34,7 @@ ls.add_snippets("tex", {
 	s("*", fmt("{}", { t("\\cdot") })),
 	s(
 		"b",
-		fmt("\\begin{{{}}}\n {} \n \\end{{{}}}\n {}", { c(1, { t(""), t("cases"), t("aligned") }), i(2), rep(1), i(3) })
+		fmt("\\begin{{{}}}\n {} \n \\end{{{}}} {}", { c(1, { t(""), t("cases"), t("aligned") }), i(2), rep(1), i(3) })
 	),
 	s("(", fmt("\\left({}\\right){}", { i(1), i(2) })),
 	s("[", fmt("\\left[{}\\right]{}", { i(1), i(2) })),

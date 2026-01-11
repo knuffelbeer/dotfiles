@@ -3,10 +3,12 @@ return {
 		"3rd/image.nvim",
 		config = function()
 			-- Example for configuring Neovim to load user-installed installed Lua rocks:
+			-- package.path = package.path ..
+			--     ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
+			-- package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
 			package.path = package.path ..
-			    ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
+			    ";" .. vim.fn.expand("$HOME") .. "/.luarocks/lib/luarocks/rocks-5.1/?/init.lua"
 			package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
-
 			-- lazy snippet
 			require("image").setup({
 
@@ -147,12 +149,14 @@ return {
 		"benlubas/molten-nvim",
 		dependencies = {
 			"GCBallesteros/jupytext.nvim",
+		  "3rd/image.nvim" ,
 			-- config = 	true	-- Depending on your nvim distro or config you may need to make the loading not lazy
 			-- lazy=false,
 		},
+
 		version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
-		-- dependencies = { "3rd/image.nvim" },
 		build = ":UpdateRemotePlugins",
+		lazy = false,
 		init = function()
 			require("jupytext").setup({
 				-- style = "python",

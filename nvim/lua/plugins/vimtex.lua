@@ -6,9 +6,13 @@ config = function   ()
 	vim.cmd([[
 syntax enable
 filetype plugin indent on
-let g:vimtex_view_general_viewer = 'okular'
-let g:vimtex_view_method = 'mupdf'
-let g:vimtex_compiler_method = 'latexrun'
+"let g:vimtex_view_general_viewer = 'okular'
+"let g:vimtex_view_method = 'open'
+
+let g:vimtex_view_method = 'general'
+let g:vimtex_view_general_viewer = 'open'
+"let g:vimtex_view_general_options = '@pdf'
+let g:vimtex_compiler_method = 'latexmk'
 let g:tex_flavor = 'latex'
 let g:vimtex_quickfix_mode=0
 let g:vimtex_matchparen_enabled = 0

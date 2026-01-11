@@ -3,14 +3,14 @@ return {
 		"williamboman/mason.nvim",
 		lazy = false,
 		config = function()
-			require("mason").setup({ ensure_installed = { "eslint_d", "erb_lint" , "cpplint"} })
+			require("mason").setup({ ensure_installed = { "eslint_d", "erb_lint", "cpplint", "ltex-ls" } })
 		end,
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
 		lazy = false,
 		config = function()
-			require("mason-lspconfig").setup({ ensure_installed = { "lua_ls", "clangd", "html" } })
+			require("mason-lspconfig").setup({ ensure_installed = { "lua_ls", "clangd", "pyright" } })
 		end,
 		opts = {
 			auto_install = true,
@@ -60,16 +60,14 @@ return {
 				-- capabilities = capabilities,
 				-- opts = {
 				-- 	-- https://github.com/microsoft/pyright/blob/main/docs/settings.md
-				-- 	settings = {
-				-- 		python = {
-				-- 			analysis = {
-				-- 				typeCheckingMode = "basic",
-				-- 			},
-				-- 			-- Always use the current python in accordance with $PATH (the current conda/virtualenv).
-				-- 			--pythonPath = vim.fn.exepath(""),
-				-- 		},
-				-- 	},
-				-- },
+				settings = {
+					python = {
+						analysis = {
+							typeCheckingMode = "basic",
+						},
+						pythonPath = require("globals.env_vars").python_path
+					},
+				}
 			})
 
 			--      lspconfig.ast_grep.setup({
@@ -82,8 +80,4 @@ return {
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
 		end,
 	},
--- 	{
--- "jmbuhr/otter.nvim",
---    opts = {},
--- 	},
 }

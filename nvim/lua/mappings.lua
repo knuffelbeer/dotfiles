@@ -87,6 +87,7 @@ local function show_filename_centered()
 		end
 	end, { buffer = buf, nowait = true, silent = true })
 end
+
 vim.keymap.set("n", "<leader>hf", show_filename_centered, { desc = "Show filename in center" })
 vim.keymap.set("n", "<M-j>", ":cnext<CR>")
 vim.keymap.set("n", "<M-k>", ":cprev<CR>")

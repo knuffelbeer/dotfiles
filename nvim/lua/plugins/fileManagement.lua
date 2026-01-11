@@ -2,45 +2,72 @@ return {
 	{
 		"stevearc/oil.nvim",
 		config = function()
-			require("oil").setup({ default_file_explorer = true,})
+						local oil =require"oil"
+
+				local function create_file()
+					-- prompt for file name
+					local fname = vim.fn.input("Create file: ")
+					if fname == "" then
+						return
+					end
+
+					-- get Oil’s current directory
+					local oil_dir = oil.get_current_dir()
+					print(oil_dir)
+
+					-- full path
+					local path = oil_dir .. fname
+
+					-- create directories if needed
+					local dir = vim.fn.fnamemodify(path, ":h")
+					vim.fn.mkdir(dir, "p")
+
+					-- create the file
+					vim.fn.writefile({}, path)
+					require"oil.actions".refresh.callback()
+				end
+			oil.setup({ default_file_explorer = true,
+			keymaps  = {["%"] =create_file}
+
+			})
 			vim.keymap.set("n", "<leader>-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 		end,
 	},
-	{
-		"prichrd/netrw.nvim",
-		config = function()
-			require("netrw").setup({
-				-- File icons to use when `use_devicons` is false or if
-				-- no icon is found for the given file type.
-				icons = {
-					symlink = "",
-					directory = "",
-					file = "",
-				},
-				-- Uses mini.icon or nvim-web-devicons if true, otherwise use the file icon specified above
-				use_devicons = true,
-				mappings = {
-					-- Function mappings receive an object describing the node under the cursor
-					["<CR>"] = function()
-						local filename = vim.fn.expand("%:p:h") .. "/" .. vim.fn.expand("<cfile>")
-						local file_extension = vim.fn.fnamemodify(filename, ":e")
-						if file_extension == "pdf" or file_extension == "jpg" or file_extension == "png" then
-							vim.cmd("silent :!okular " .. filename .. " &")
-						elseif file_extension == "odt" or file_extension == "docx" or file_extension == "xlsx" then
-							vim.cmd("silent :!libreoffice " .. filename .. " &")
-						elseif file_extension == "" then
-							vim.cmd("Lexplore " .. filename)
-						else
-							vim.cmd("edit " .. filename)
-						end
-					end,
-					-- String mappings are executed as vim commands
-					["<Leader>p"] = " :echo 'hello world'<CR>",
-				},
-			})
-		end,
-		lazy = false,
-	},
+	-- {
+	-- 	"prichrd/netrw.nvim",
+	-- 	config = function()
+	-- 		require("netrw").setup({
+	-- 			-- File icons to use when `use_devicons` is false or if
+	-- 			-- no icon is found for the given file type.
+	-- 			icons = {
+	-- 				symlink = "",
+	-- 				directory = "",
+	-- 				file = "",
+	-- 			},
+	-- 			-- Uses mini.icon or nvim-web-devicons if true, otherwise use the file icon specified above
+	-- 			use_devicons = true,
+	-- 			mappings = {
+	-- 				-- Function mappings receive an object describing the node under the cursor
+	-- 				["<CR>"] = function()
+	-- 					local filename = vim.fn.expand("%:p:h") .. "/" .. vim.fn.expand("<cfile>")
+	-- 					local file_extension = vim.fn.fnamemodify(filename, ":e")
+	-- 					if file_extension == "pdf" or file_extension == "jpg" or file_extension == "png" then
+	-- 						vim.cmd("silent :!okular " .. filename .. " &")
+	-- 					elseif file_extension == "odt" or file_extension == "docx" or file_extension == "xlsx" then
+	-- 						vim.cmd("silent :!libreoffice " .. filename .. " &")
+	-- 					elseif file_extension == "" then
+	-- 						vim.cmd("Lexplore " .. filename)
+	-- 					else
+	-- 						vim.cmd("edit " .. filename)
+	-- 					end
+	-- 				end,
+	-- 				-- String mappings are executed as vim commands
+	-- 				["<Leader>p"] = " :echo 'hello world'<CR>",
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- 	lazy = false,
+	-- },
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.5",
@@ -61,18 +88,23 @@ return {
 				vim.api.nvim_set_hl(0, name, opts)
 			end
 
-			hl("TelescopeNormal", { bg = "none", fg = "#870000" })
-			hl("TelescopePreviewNormal", { bg = "none", fg = "#5f6b64" })
-			hl("TelescopeResultsNormal", { bg = "none", fg = "#5f6b64" })
-			hl("TelescopeBorder", { bg = "#181825" })
-			hl("TelescopePreviewBorder", { fg = "#870000", bg = "none" })
-			hl("TelescopePromptBorder", { fg = "#870000", bg = "none" })
-			hl("TelescopeResultsBorder", { fg = "#870000", bg = "none" })
-			hl("TelescopeTitle", { fg = "#181825", bg = "#870000" })
-			hl("TelescopePreviewTitle", { fg = "#181825", bg = "#870000" })
-			hl("TelescopePromptNormal", { bg = "none", fg = "#5f6b64" })
-			hl("TelescopePromptTitle", { fg = "#181825", bg = "#870000" })
-			hl("TelescopePromptCounter", { fg = "#870000", bg = "none" })
+			local red = require"globals.colors".cyan
+			local grey = require"globals.colors".grey
+			local blue = require"globals.colors".green_grey
+			local light_blue=require"globals.colors".dark_grey
+
+			hl("TelescopeNormal", { bg = "none", fg =red })
+			hl("TelescopePreviewNormal", { bg = "none", fg = blue })
+			hl("TelescopeResultsNormal", { bg = "none", fg = blue })
+			hl("TelescopeBorder", { bg =light_blue })
+			hl("TelescopePreviewBorder", { fg =red, bg = "none" })
+			hl("TelescopePromptBorder", { fg =red, bg = "none" })
+			hl("TelescopeResultsBorder", { fg =red, bg = "none" })
+			hl("TelescopeTitle", { fg =light_blue, bg =red })
+			hl("TelescopePreviewTitle", { fg = light_blue, bg =red })
+			hl("TelescopePromptNormal", { bg = "none", fg = blue })
+			hl("TelescopePromptTitle", { fg =light_blue, bg =red })
+			hl("TelescopePromptCounter", { fg =red, bg = "none" })
 		end,
 	},
 	{
