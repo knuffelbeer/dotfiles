@@ -165,7 +165,7 @@ return {
 			})
 			-- these are examples, not defaults. Please see the readme
 			vim.g.molten_auto_open_html_in_browser = true
-			vim.g.molten_open_cmd = "zen-browser --new-window "
+			vim.g.molten_open_cmd = "open"
 			vim.g.molten_image_provider = "image.nvim"
 			vim.g.molten_output_win_max_height = 20
 			vim.keymap.set("n", "<leader>mi", ":MoltenInit python3<CR>", { noremap = true })
